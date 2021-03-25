@@ -1,0 +1,27 @@
+//Using hql
+
+String hql = "FROM Laptop L where L.Customer_review = :review AND L.HardDiskSize = :HDSize AND " +
+		"L.RAMSize = :ramSize AND L.CPUSpeed = :cpuSpeed AND " +
+		"L.OS = :os AND L.Weight = :weight AND L.CPU = :cpu";
+
+
+//Using Criteria
+
+Criteria crit = session.createCriteria(Laptop.class);
+Criterion customerReview = Restrictions.eq("review", "Best");
+Criterion hardDiskSize = Restrictions.eq("HardDiskSize", 512);
+Criterion ramSize = Restrictions.eq("RAMSize", 12);
+Criterion cpuSpeed = Restrictions.eq("CPUSpeed", 2GHz);
+Criterion os =  Restrictions.eq("OS", "Windows");
+Criterion weight = Restrictions.eq("Weight", "2kg");
+Criterion cpu =  Restrictions.eq("CPU", "Intel Core i5");
+Disjunction disjunction = Restrictions.disjunction();
+disjunction.add(customerReview);
+disjunction.add(hardDiskSize);
+disjunction.add(ramSize);
+disjunction.add(cpuSpeed);
+disjunction.add(os);
+disjunction.add(weight);
+disjunction.add(cpu);
+crit.add(disjunction);
+List results = crit.list();
